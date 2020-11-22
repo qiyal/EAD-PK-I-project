@@ -44,6 +44,10 @@ public class Motorbike implements Movable {
         return modelCode;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
     public int getPrice() {
         return price;
     }

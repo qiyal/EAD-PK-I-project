@@ -1,7 +1,5 @@
 package midka.observers.listeners;
 
-import midka.Customer;
-
 public class AddMotorbikeListener implements EventListener {
     public String motorbikeName;
     public String email;

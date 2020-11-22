@@ -1,6 +1,6 @@
 package midka.strategies;
 
-import midka.Customer;
+import midka.users.Customer;
 import midka.Order;
 import midka.singleton.DBBike;
 import midka.singleton.DBOrder;
@@ -24,7 +24,8 @@ public class PayByCash implements PayStrategy {
     @Override
     public void collectPaymentDetails(String motorbikeName, String customerName) {
         this.motorbikeName = motorbikeName;
-        customer = dbUser.getCustomer(customerName);
+        customer = (Customer)dbUser.getUser(customerName);
+//        customer = dbUser.getCustomer(customerName);
     }
 
 

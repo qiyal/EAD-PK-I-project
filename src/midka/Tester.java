@@ -12,6 +12,8 @@ import midka.singleton.DBCredit;
 import midka.singleton.DBOrder;
 import midka.singleton.DBUser;
 import midka.strategies.*;
+import midka.users.Admin;
+import midka.users.Customer;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -84,7 +86,7 @@ public class Tester {
                             card = new CreditCard(number, date, cvv);
                         }
 
-                        if (!dbUser.addUser(new Customer(firstname, lastname, email, card))) {
+                        if (!dbUser.addUser(new Customer(firstname, lastname, email, "123", card))) {
                             System.err.println("Email " + email + "already exist!!!\n Again!");
                         }
                     } else {
@@ -102,33 +104,45 @@ public class Tester {
                 }
                 // Sing In
                 else if (op == 1) {
-                    System.out.println("\nYou are Client --- 1");
-                    System.out.println("You are Admin --- 2");
-                    System.out.print("enter: ");
-                    op = sc.nextInt();
+                    System.out.print("\nLogin: ");
+                    String login = sc.next();
 
-                    if(op == 1) {
-                        System.out.print("\nEmail: ");
-                        String email = sc.next();
+                    System.out.print("Password: ");
+                    String password = sc.next();
 
-                        if (dbUser.checkUser(email)) {
-                            user = email;
-                        } else {
-                            System.out.println("\nLogin or Password is not correct!!!");
-                        }
+                    if(dbUser.checkUser(login, password)) {
+                        user = login;
                     } else {
-                        System.out.print("\nLogin: ");
-                        String email = sc.next();
-
-                        System.out.print("Password: ");
-                        String password = sc.next();
-                        if (dbUser.checkUser(email, password)) {
-                            user = email;
-                            System.out.println("User: " + user);
-                        } else {
-                            System.out.println("\nLogin or Password is not correct!!!");
-                        }
+                        System.out.println("\nLogin or Password is not correct!!!");
                     }
+
+//                    System.out.println("\nYou are Client --- 1");
+//                    System.out.println("You are Admin --- 2");
+//                    System.out.print("enter: ");
+//                    op = sc.nextInt();
+
+//                    if(op == 1) {
+//                        System.out.print("\nEmail: ");
+//                        String email = sc.next();
+//
+//                        if (dbUser.checkUser(email)) {
+//                            user = email;
+//                        } else {
+//                            System.out.println("\nLogin or Password is not correct!!!");
+//                        }
+//                    } else {
+//                        System.out.print("\nLogin: ");
+//                        String email = sc.next();
+//
+//                        System.out.print("Password: ");
+//                        String password = sc.next();
+//                        if (dbUser.checkUser(email, password)) {
+//                            user = email;
+//                            System.out.println("User: " + user);
+//                        } else {
+//                            System.out.println("\nLogin or Password is not correct!!!");
+//                        }
+//                    }
                 } else if (op == 0) {
                     System.out.println("\n--- EXIT ---");
                     break;

@@ -1,4 +1,4 @@
-package midka;
+package midka.users;
 
 public abstract class User {
     private String firstName;

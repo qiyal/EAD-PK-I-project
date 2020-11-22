@@ -109,8 +109,7 @@ public class DBBike {
         else {
             int i = 1;
             for (String key : motorbikes.keySet()) {
-                System.out.println("\n" + i + ") " + key + "\nCounter: " + motorbikes.get(key).count);
-                i++;
+                System.out.println("\n" + (i++) + ") " + key + " (" + motorbikes.get(key).motorbike.getManufacturer() + ")" + "\nCounter: " + motorbikes.get(key).count);
             }
         }
     }

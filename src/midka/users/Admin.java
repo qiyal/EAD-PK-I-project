@@ -1,4 +1,6 @@
-package midka;
+package midka.users;
+
+import midka.users.User;
 
 public class Admin extends User {
     private String login;

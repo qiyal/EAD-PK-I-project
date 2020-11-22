@@ -1,16 +1,18 @@
-package midka;
+package midka.users;
 
 import midka.strategies.CreditCard;
 
 public class Customer extends User {
     private String email;
+    private String password;
     private CreditCard card;
 
     public Customer() {}
 
-    public Customer(String firstName, String lastName, String email, CreditCard card) {
+    public Customer(String firstName, String lastName, String email, String password, CreditCard card) {
         super(firstName, lastName);
         this.email = email;
+        this.password = password;
         this.card = card;
     }
 
@@ -24,6 +26,10 @@ public class Customer extends User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
