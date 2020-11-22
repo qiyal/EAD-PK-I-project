@@ -2,11 +2,14 @@ package midka;
 
 import midka.builders.MotorbikeBuilder;
 import midka.builders.director.Director;
+import midka.handlers.BaseAuthHandler;
+import midka.handlers.RoleCheckHandler;
 import midka.motorbikes.Motorbike;
 import midka.observers.EventManager;
 import midka.observers.listeners.AddMotorbikeListener;
 import midka.observers.listeners.ChangePriceMotorbike;
 import midka.observers.listeners.EventListener;
+import midka.services.AuthService;
 import midka.singleton.DBBike;
 import midka.singleton.DBCredit;
 import midka.singleton.DBOrder;
@@ -28,11 +31,16 @@ public class Tester {
         DBOrder dbOrder = DBOrder.getInstance();
         DBCredit dbCredit = DBCredit.getInstance();
 
+        AuthService authService = AuthService.getInstance();
+
+        BaseAuthHandler baseAuthHandler = new BaseAuthHandler();
+        RoleCheckHandler roleCheckHandler = new RoleCheckHandler();
+        baseAuthHandler.setNext(roleCheckHandler);
+        authService.setHandler(baseAuthHandler);
+
         ArrayList<String> nameBikes;
         PayStrategy payStrategy;
         EventManager manager = new EventManager();
-
-        String user = null;
 
         // TEST
         dbUser.showAdmin();
@@ -42,7 +50,7 @@ public class Tester {
         while(true) {
             nameBikes = dbBike.getBikesCodeName();
 
-            if(user == null) {
+            if(authService.isAuth() == false) {
                 System.out.println("\nenter 1 --- Sign In");
                 System.out.println("enter 2 --- Sign Up");
                 System.out.println("enter 0 --- EXIT");
@@ -110,39 +118,9 @@ public class Tester {
                     System.out.print("Password: ");
                     String password = sc.next();
 
-                    if(dbUser.checkUser(login, password)) {
-                        user = login;
-                    } else {
+                    if(!authService.doAuth(login, password)) {
                         System.out.println("\nLogin or Password is not correct!!!");
                     }
-
-//                    System.out.println("\nYou are Client --- 1");
-//                    System.out.println("You are Admin --- 2");
-//                    System.out.print("enter: ");
-//                    op = sc.nextInt();
-
-//                    if(op == 1) {
-//                        System.out.print("\nEmail: ");
-//                        String email = sc.next();
-//
-//                        if (dbUser.checkUser(email)) {
-//                            user = email;
-//                        } else {
-//                            System.out.println("\nLogin or Password is not correct!!!");
-//                        }
-//                    } else {
-//                        System.out.print("\nLogin: ");
-//                        String email = sc.next();
-//
-//                        System.out.print("Password: ");
-//                        String password = sc.next();
-//                        if (dbUser.checkUser(email, password)) {
-//                            user = email;
-//                            System.out.println("User: " + user);
-//                        } else {
-//                            System.out.println("\nLogin or Password is not correct!!!");
-//                        }
-//                    }
                 } else if (op == 0) {
                     System.out.println("\n--- EXIT ---");
                     break;
@@ -151,8 +129,8 @@ public class Tester {
                 }
             }
             // Admins Panel
-            else if (dbUser.isAdmin(user)) {
-                System.out.println("\nAdmin: " + user);
+            else if (authService.isAuth() && authService.getRole().equals("Admin")) {
+                System.out.println("\nAdmin: " + authService.getAuthUserLogin());
 
                 System.out.println("\nenter 1 --- Add new Motorbike");
                 System.out.println("enter 2 --- Show orders");
@@ -165,7 +143,7 @@ public class Tester {
                 op = sc.nextInt();
 
                 if(op == -1) {
-                    user = null;
+                    authService.logOut();
                 } else if (op == 1) {
                     Director director = new Director();
                     System.out.println("\nAdd Yamaha --- 1");
@@ -209,7 +187,7 @@ public class Tester {
             }
             // Users Panel
             else {
-                System.out.println("\nCustomer: " + user);
+                System.out.println("\nCustomer: " + authService.getAuthUserLogin());
 
                 System.out.println("\nenter 1 --- Buy motorbike");
                 System.out.println("enter 2 --- Show motorbikes");
@@ -223,7 +201,7 @@ public class Tester {
 
                 // Sign Out
                 if(op == -1) {
-                    user = null;
+                    authService.logOut();
                 }
                 // Buy
                 else if (op == 1) {
@@ -249,7 +227,7 @@ public class Tester {
                         payStrategy = new PayByCredit();
                     }
 
-                    payStrategy.collectPaymentDetails(nameBikes.get(chose), user);
+                    payStrategy.collectPaymentDetails(nameBikes.get(chose), authService.getAuthUserLogin());
 
                     if (payStrategy.pay(dbBike.getMotorBike(nameBikes.get(chose)).getPrice())) {
                         System.out.println("\nPayment has been successful.");
@@ -259,7 +237,7 @@ public class Tester {
                 } else if (op == 2) {
                     dbBike.showAllMotorBikes();
                 } else if (op == 3) {
-                    dbOrder.showCustomerOrders(user);
+                    dbOrder.showCustomerOrders(authService.getAuthUserLogin());
                 } else if(op == 4) {
                     System.out.println();
                     for (int i = 0; i < nameBikes.size(); i++) {
@@ -277,10 +255,10 @@ public class Tester {
                     EventListener eventListener;
                     if (op == 1) {
                         System.out.println("Chose: " + nameBikes.get(chose) + "value: " + chose);
-                        eventListener = new AddMotorbikeListener(nameBikes.get(chose), user);
+                        eventListener = new AddMotorbikeListener(nameBikes.get(chose), authService.getAuthUserLogin());
                         manager.subscribe("add", eventListener);
                     } else {
-                        eventListener = new ChangePriceMotorbike(nameBikes.get(chose), user, dbBike.getMotorBike(nameBikes.get(chose)).getPrice());
+                        eventListener = new ChangePriceMotorbike(nameBikes.get(chose), authService.getAuthUserLogin(), dbBike.getMotorBike(nameBikes.get(chose)).getPrice());
                         manager.subscribe("changePrice", eventListener);
                     }
                 } else if (op == 5) {
@@ -301,10 +279,10 @@ public class Tester {
 
                     EventListener eventListener;
                     if (op == 1) {
-                        eventListener = new AddMotorbikeListener(nameBike, user);
+                        eventListener = new AddMotorbikeListener(nameBike, authService.getAuthUserLogin());
                         manager.unsubscribe("add", eventListener);
                     } else {
-                        eventListener = new ChangePriceMotorbike(nameBike, user, dbBike.getMotorBike(nameBike).getPrice());
+                        eventListener = new ChangePriceMotorbike(nameBike, authService.getAuthUserLogin(), dbBike.getMotorBike(nameBike).getPrice());
                         manager.unsubscribe("changePrice", eventListener);
                     }
                 } else if (op == 0) {

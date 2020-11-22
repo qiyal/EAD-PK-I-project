@@ -2,7 +2,6 @@ package midka.singleton;
 
 import midka.builders.MotorbikeBuilder;
 import midka.motorbikes.Motorbike;
-import midka.motorbikes.Movable;
 import midka.motorbikes.components.Chassis;
 import midka.motorbikes.components.Engine;
 import midka.motorbikes.components.Transmission;

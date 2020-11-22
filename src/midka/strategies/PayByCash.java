@@ -25,7 +25,6 @@ public class PayByCash implements PayStrategy {
     public void collectPaymentDetails(String motorbikeName, String customerName) {
         this.motorbikeName = motorbikeName;
         customer = (Customer)dbUser.getUser(customerName);
-//        customer = dbUser.getCustomer(customerName);
     }
 
 
