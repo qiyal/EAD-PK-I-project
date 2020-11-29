@@ -23,6 +23,10 @@ public class AuthService {
     }
 
     // METHODS
+    public boolean isAuth() {
+        return auth;
+    }
+
     public boolean doAuth(String login, String password) {
         if (handler.check(login, password)) {
             this.authUserLogin = login;
@@ -50,10 +54,6 @@ public class AuthService {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public boolean isAuth() {
-        return auth;
     }
 
     public void setHandler(Handler handler) {

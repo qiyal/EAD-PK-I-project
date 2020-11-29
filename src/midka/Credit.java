@@ -1,6 +1,5 @@
 package midka;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Credit {
@@ -12,8 +11,8 @@ public class Credit {
     private int years = 5;
 
     public Credit(int amount, double coefficient, Order order) {
-        this.amount = amount;
-        this.coefficient = coefficient;
+        this.amount = (int)(amount * coefficient);
+        this.coefficient = (coefficient - 1.0) * 100;
         this.order = order;
         startTime = new Date();
         endTime = new Date();
@@ -32,6 +31,18 @@ public class Credit {
         return coefficient;
     }
 
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public int getYears() {
+        return years;
+    }
+
     public void setCoefficient(double coefficient) {
         this.coefficient = coefficient;
     }
@@ -46,7 +57,7 @@ public class Credit {
 
     @Override
     public String toString() {
-        return "\nAmount: " + (amount * coefficient) +
+        return "\nAmount: " + amount +
                 "\nCoefficient: " + coefficient +
                 "\n[ Order ]" + order.toString() +
                 "\nStart time: " + startTime +

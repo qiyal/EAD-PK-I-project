@@ -1,6 +1,9 @@
 package midka.singleton;
 
 import midka.builders.MotorbikeBuilder;
+import midka.iterators.DBBikeIterator;
+import midka.iterators.ICustomIterableCollection;
+import midka.iterators.ICustomIterator;
 import midka.motorbikes.Motorbike;
 import midka.motorbikes.components.Chassis;
 import midka.motorbikes.components.Engine;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DBBike {
+public class DBBike implements ICustomIterableCollection {
     private static DBBike instance;
     private Map<String, Pair> motorbikes = new HashMap<>();
 
@@ -106,13 +109,23 @@ public class DBBike {
         if (motorbikes.isEmpty())
             System.out.println("\nThere are not motorbikes in the Garage!!!");
         else {
-            int i = 1;
-            for (String key : motorbikes.keySet()) {
-                System.out.println("\n" + (i++) + ") " + key + " (" + motorbikes.get(key).motorbike.getManufacturer() + ")" + "\nCounter: " + motorbikes.get(key).count);
+            System.out.println("\n[ Motorbikes ]");
+            ICustomIterator iterator = createIterator();
+            int i = 0;
+
+            while (iterator.hasNext()) {
+                Pair pair = (Pair) iterator.next();
+                System.out.println("\n" + (i++) + ") " + pair.motorbike.getModelCode());
+                System.out.println("   Manufacturer: " + pair.motorbike.getManufacturer());
+                System.out.println("   Price: " + pair.motorbike.getPrice());
+                System.out.println("   Count: " + pair.count);
             }
         }
     }
 
 
-
+    @Override
+    public ICustomIterator createIterator() {
+        return new DBBikeIterator(motorbikes);
+    }
 }

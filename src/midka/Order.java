@@ -1,7 +1,5 @@
 package midka;
 
-import midka.strategies.PayStrategy;
-
 public class Order {
     private int cost = 0;
     private String customerEmail;

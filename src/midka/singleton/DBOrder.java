@@ -1,12 +1,16 @@
 package midka.singleton;
 
 import midka.Order;
+import midka.iterators.DBOrderIterator;
+import midka.iterators.ICustomIterableCollection;
+import midka.iterators.ICustomIterator;
+import midka.motorbikes.Motorbike;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DBOrder {
+public class DBOrder implements ICustomIterableCollection {
     private static DBOrder instance;
     private ArrayList<Order> orders = new ArrayList<>();
 
@@ -24,19 +28,42 @@ public class DBOrder {
 
     public void showOrders() {
         if (orders.isEmpty()) {
-            System.out.println("\nDB is Empty!");
+            System.out.println("\n[ DB Order is Empty! ]");
         } else {
-            System.out.println("\nORDERS");
-            for (Order order : orders) {
-                System.out.println(order);
+            System.out.println("\n[ ORDERS ]");
+            ICustomIterator iterator = createIterator();
+            while (iterator.hasNext()) {
+                Order order = (Order) iterator.next();
+                System.out.println("\nMotorbike: " + order.getMotorbikeId());
+                System.out.println("Customer email: " + order.getCustomerEmail());
+                System.out.println("Cots: " + order.getTotalCost());
             }
         }
     }
 
     public void showCustomerOrders(String email) {
-        for (Order order : orders) {
-            if(email.equals(order.getCustomerEmail()))
-                System.out.println(order);
+        if (orders.isEmpty()) {
+            System.out.println("\n[ Your list of orders is Empty! ]");
+        } else {
+            int k = 0;
+            ICustomIterator iterator = createIterator();
+            while (iterator.hasNext()) {
+                Order order = (Order) iterator.next();
+                if (email.equals(order.getCustomerEmail())) {
+                    k++;
+                    System.out.println("\nMotorbike: " + order.getMotorbikeId());
+                    System.out.println("Customer email: " + order.getCustomerEmail());
+                    System.out.println("Cots: " + order.getTotalCost());
+                }
+            }
+            if (k == 0) {
+                System.out.println("\n[ Your list of orders is Empty! ]");
+            }
         }
     }
- }
+
+    @Override
+    public ICustomIterator createIterator() {
+        return new DBOrderIterator(orders);
+    }
+}

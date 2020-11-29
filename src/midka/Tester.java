@@ -50,7 +50,7 @@ public class Tester {
         while(true) {
             nameBikes = dbBike.getBikesCodeName();
 
-            if(authService.isAuth() == false) {
+            if(!authService.isAuth()) {
                 System.out.println("\nenter 1 --- Sign In");
                 System.out.println("enter 2 --- Sign Up");
                 System.out.println("enter 0 --- EXIT");
@@ -146,8 +146,8 @@ public class Tester {
                     authService.logOut();
                 } else if (op == 1) {
                     Director director = new Director();
-                    System.out.println("\nAdd Yamaha --- 1");
-                    System.out.println("Add Harley Davidson --- 2");
+                    System.out.println("\nADD [Star Bolt R Spec XVS95CEGY/C] Yamaha --- 1");
+                    System.out.println("ADD [V-Rod Muscle VRSCF 1250] Harley Davidson --- 2");
                     System.out.print("enter: ");
                     op = sc.nextInt();
 
@@ -169,7 +169,9 @@ public class Tester {
                     System.out.println();
                     for (int i = 0; i < nameBikes.size(); i++) {
                         Motorbike motorbike = dbBike.getMotorBike(nameBikes.get(i));
-                        System.out.println(i + ") " + motorbike.getModelCode() + " --- " + motorbike.getPrice());
+                        System.out.println("\n" + i + ") " + motorbike.getModelCode());
+                        System.out.println("   Manufacturer: " + motorbike.getManufacturer());
+                        System.out.println("   Price: " + motorbike.getPrice());
                     }
                     System.out.print("chose motorbike (number): ");
                     chose = sc.nextInt();
@@ -177,6 +179,7 @@ public class Tester {
                     int newPrice;
                     System.out.print("\nenter new price: ");
                     newPrice = sc.nextInt();
+
                     dbBike.setNewPrice(nameBikes.get(chose), newPrice);
                     manager.notifyUsers(nameBikes.get(chose), "changePrice");
                 } else if (op == 0) {
@@ -209,9 +212,10 @@ public class Tester {
                     System.out.println();
                     for (int i = 0; i < nameBikes.size(); i++) {
                         Motorbike motorbike = dbBike.getMotorBike(nameBikes.get(i));
-                        System.out.println(i + ") " + motorbike.getModelCode() + " --- " + motorbike.getPrice());
+                        System.out.println("\n" + i + ") " + motorbike.getModelCode());
+                        System.out.println("   Manufacturer: " + motorbike.getManufacturer());
+                        System.out.println("   Price: " + motorbike.getPrice());
                     }
-
                     System.out.print("chose motorbike (number): ");
                     chose = sc.nextInt();
 
