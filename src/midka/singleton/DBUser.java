@@ -20,18 +20,24 @@ public class DBUser {
 
     private DBUser(){}
 
+    // INSTANCE
     public static DBUser getInstance() {
         if (instance == null)
             instance = new DBUser();
         return instance;
     }
 
-    public boolean isAdmin(String login) {
-        return (users.get(login) instanceof Admin);
+    // METHODS
+    public boolean hasLogin(String login) {
+        return this.users.containsKey(login);
     }
 
     public User getUser(String login) {
         return users.getOrDefault(login, null);
+    }
+
+    public boolean isAdmin(String login) {
+        return (users.get(login) instanceof Admin);
     }
 
     public boolean addUser(User user) {
@@ -46,6 +52,19 @@ public class DBUser {
         }
     }
 
+    public boolean checkUser(String login, String password) {
+        boolean valid = false;
+        if (users.containsKey(login)) {
+            User user = users.get(login);
+            if(user instanceof Customer) {
+                valid = ( ( (Customer) user).getPassword().equals(password));
+            } else {
+                valid = ( ( (Admin) user).getPassword().equals(password));
+            }
+        }
+        return valid;
+    }
+
     public void showCustomer() {
         for (User user : users.values()) {
             if(user instanceof Customer)
@@ -58,18 +77,5 @@ public class DBUser {
             if(user instanceof Admin)
                 System.out.println( ( (Admin) user).getLogin());
         }
-    }
-
-    public boolean checkUser(String login, String password) {
-        boolean valid = false;
-        if (users.containsKey(login)) {
-            User user = users.get(login);
-            if(user instanceof Customer) {
-                valid = ( ( (Customer) user).getPassword().equals(password));
-            } else {
-                valid = ( ( (Admin) user).getPassword().equals(password));
-            }
-        }
-        return valid;
     }
 }
