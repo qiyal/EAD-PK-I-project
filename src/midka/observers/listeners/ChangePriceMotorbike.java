@@ -1,5 +1,6 @@
 package midka.observers.listeners;
 
+import midka.services.NotifierService;
 import midka.singleton.DBBike;
 
 public class ChangePriceMotorbike implements EventListener {
@@ -7,6 +8,7 @@ public class ChangePriceMotorbike implements EventListener {
     public String email;
     private String message;
     private DBBike dbBike = DBBike.getInstance();
+    private NotifierService notifierService = NotifierService.getInstance();
 
     public ChangePriceMotorbike(String motorbikeName, String email) {
         this.motorbikeName = motorbikeName;
@@ -18,8 +20,7 @@ public class ChangePriceMotorbike implements EventListener {
         if(eventType.equals(motorbikeName)) {
             int newPrice = dbBike.getMotorBike(motorbikeName).getPrice();
             message = motorbikeName + "\nNew price: " + newPrice;
-            System.out.println("\nSent Message to " + email + ".");
-            System.out.println(message);
+            notifierService.sendMessage(email, message);
         }
     }
 }

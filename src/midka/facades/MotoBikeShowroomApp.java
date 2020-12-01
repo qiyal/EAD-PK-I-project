@@ -10,6 +10,7 @@ import midka.observers.listeners.AddMotorbikeListener;
 import midka.observers.listeners.ChangePriceMotorbike;
 import midka.observers.listeners.EventListener;
 import midka.services.AuthService;
+import midka.services.NotifierService;
 import midka.singleton.DBBike;
 import midka.singleton.DBCredit;
 import midka.singleton.DBOrder;
@@ -27,6 +28,7 @@ public class MotoBikeShowroomApp {
     private DBOrder dbOrder;
     private DBCredit dbCredit;
     private AuthService authService;
+    private NotifierService notifierService;
     private PayStrategy payStrategy;
     private EventManager manager;
     private ArrayList<String> nameBikes;
@@ -41,7 +43,8 @@ public class MotoBikeShowroomApp {
         dbCredit = DBCredit.getInstance();
     }
 
-    private void initAuthService() {
+    private void initServices() {
+        notifierService = NotifierService.getInstance();
         authService = AuthService.getInstance();
     }
 
@@ -270,7 +273,7 @@ public class MotoBikeShowroomApp {
         sc = new Scanner(System.in);
 
         initDataBases();
-        initAuthService();
+        initServices();
         initHandler();
         initEventManager();
 
@@ -342,6 +345,7 @@ public class MotoBikeShowroomApp {
                 System.out.println("enter 3 --- Show your orders");
                 System.out.println("enter 4 --- Subscribes");
                 System.out.println("enter 5 --- Unsubscribes");
+                System.out.println("enter 6 --- Setting notifications");
                 System.out.println("enter -1 --- Sign Out");
                 System.out.println("enter 0 --- EXIT");
                 System.out.print("enter: ");
@@ -362,6 +366,8 @@ public class MotoBikeShowroomApp {
                     doSubscribes();
                 } else if (op == 5) {
                     doUnsubscribes();
+                } else if (op == 6) {
+                    notifierService.runMenu(authService.getAuthUserLogin());
                 } else if (op == 0) {
                     break;
                 } else {
