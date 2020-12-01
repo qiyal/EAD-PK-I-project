@@ -13,7 +13,7 @@ public class AddMotorbikeListener implements EventListener {
     public void update(String eventType) {
         if(motorbikeName.equals(eventType)) {
             System.out.println("\nSent Message to " + email + ".");
-            System.out.println("We have received a new motorcycle" + motorbikeName + ".");
+            System.out.println("We have received a new motorcycle: " + motorbikeName + ".");
         }
     }
 }

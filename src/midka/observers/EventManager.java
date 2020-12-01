@@ -22,7 +22,7 @@ public class EventManager {
                 AddMotorbikeListener l1 = (AddMotorbikeListener) listener;
                 AddMotorbikeListener l2 = (AddMotorbikeListener) user;
                 if (l1.email.equals(l2.email) && l1.motorbikeName.equals(l2.motorbikeName)) {
-                    System.out.println("\nAlready available!(Add)" + l1.motorbikeName);
+                    System.out.println("\nAlready available! (Add) " + l1.motorbikeName);
                     return;
                 }
             } else {
@@ -60,7 +60,7 @@ public class EventManager {
                 }
             }
         }
-        System.out.println("Can not found!");
+        System.out.println("\nCan not found!");
     }
 
     public void notifyUsers(String motorbikeName, String event) {

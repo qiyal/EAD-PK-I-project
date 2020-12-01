@@ -17,8 +17,8 @@ public class ChangePriceMotorbike implements EventListener {
     public void update(String eventType) {
         if(eventType.equals(motorbikeName)) {
             int newPrice = dbBike.getMotorBike(motorbikeName).getPrice();
-            message = "New price: " + newPrice;
-            System.out.println("Sent Message to " + email + ".");
+            message = motorbikeName + "\nNew price: " + newPrice;
+            System.out.println("\nSent Message to " + email + ".");
             System.out.println(message);
         }
     }

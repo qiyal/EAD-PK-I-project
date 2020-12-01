@@ -34,29 +34,29 @@ public class MotoBikeShowroomApp {
     private int op;
     private int chose;
 
-    public void initDataBases() {
+    private void initDataBases() {
         dbBike = DBBike.getInstance();
         dbUser = DBUser.getInstance();
         dbOrder = DBOrder.getInstance();
         dbCredit = DBCredit.getInstance();
     }
 
-    public void initAuthService() {
+    private void initAuthService() {
         authService = AuthService.getInstance();
     }
 
-    public void initHandler() {
+    private void initHandler() {
         BaseAuthHandler baseAuthHandler = new BaseAuthHandler();
         RoleCheckHandler roleCheckHandler = new RoleCheckHandler();
         baseAuthHandler.setNext(roleCheckHandler);
         authService.setHandler(baseAuthHandler);
     }
 
-    public void initEventManager() {
+    private void initEventManager() {
         manager = new EventManager();
     }
 
-    public void createCustomer() {
+    private void createCustomer() {
         String firstname, lastname, email, password;
         CreditCard card = null;
 
@@ -104,7 +104,7 @@ public class MotoBikeShowroomApp {
         }
     }
 
-    public void createAdmin() {
+    private void createAdmin() {
         String firstname, lastname, login, password;
 
         while (true) {
@@ -134,7 +134,7 @@ public class MotoBikeShowroomApp {
         }
     }
 
-    public void signUp() {
+    private void signUp() {
         System.out.println("\nYou are Client --- 1");
         System.out.println("You are Admin --- 2");
         System.out.print("enter: ");
@@ -147,7 +147,7 @@ public class MotoBikeShowroomApp {
         }
     }
 
-    public void signIn() {
+    private void signIn() {
         System.out.print("\nLogin: ");
         String login = sc.next();
 
@@ -159,7 +159,7 @@ public class MotoBikeShowroomApp {
         }
     }
 
-    public void addNewMotorbike() {
+    private void addNewMotorbike() {
         Director director = new Director();
         System.out.println("\nADD [Star Bolt R Spec XVS95CEGY/C] Yamaha --- 1");
         System.out.println("ADD [V-Rod Muscle VRSCF 1250] Harley Davidson --- 2");
@@ -175,7 +175,7 @@ public class MotoBikeShowroomApp {
         }
     }
 
-    public void choseMotorbike() {
+    private void choseMotorbike() {
         System.out.println();
         for (int i = 0; i < nameBikes.size(); i++) {
             Motorbike motorbike = dbBike.getMotorBike(nameBikes.get(i));
@@ -187,7 +187,7 @@ public class MotoBikeShowroomApp {
         chose = sc.nextInt();
     }
 
-    public void changeMotorbikePrice() {
+    private void changeMotorbikePrice() {
         choseMotorbike();
 
         int newPrice;
@@ -198,7 +198,7 @@ public class MotoBikeShowroomApp {
         manager.notifyUsers(nameBikes.get(chose), "changePrice");
     }
 
-    public void buyMotorbike() {
+    private void buyMotorbike() {
         choseMotorbike();
 
         System.out.println("\nChose payment method:\nenter 1 --- Cash\nenter 2 --- Credit Card\nenter 3 -- Take Credit");
@@ -222,7 +222,7 @@ public class MotoBikeShowroomApp {
         }
     }
 
-    public String collectInfoOfEventListener() {
+    private String collectInfoOfEventListener() {
         System.out.println("\n0) V-Rod Muscle VRSCF 1250\n1) Star Bolt R Spec XVS95CEGY/C");
         System.out.print("chose motorbike (number): ");
         chose = sc.nextInt();
@@ -240,7 +240,7 @@ public class MotoBikeShowroomApp {
         return nameBike;
     }
 
-    public void doSubscribes() {
+    private void doSubscribes() {
         String nameBike = collectInfoOfEventListener();
 
         EventListener eventListener;
@@ -253,7 +253,7 @@ public class MotoBikeShowroomApp {
         }
     }
 
-    public void doUnsubscribes() {
+    private void doUnsubscribes() {
         String nameBike = collectInfoOfEventListener();
 
         EventListener eventListener;
