@@ -31,7 +31,7 @@ public class DBCredit implements ICustomIterableCollection {
         if (credits.isEmpty()) {
             System.out.println("\n[ DB Credit is Empty! ]");
         } else {
-            System.out.println("\n[ ORDERS ]");
+            System.out.println("\n[ CREDITS ]");
             ICustomIterator iterator = createIterator();
             while (iterator.hasNext()) {
                 Credit credit = (Credit) iterator.next();

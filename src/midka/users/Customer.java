@@ -2,7 +2,6 @@ package midka.users;
 
 import midka.decorators.NotifierEnum;
 import midka.strategies.CreditCard;
-import midka.visitor.Visitor;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,7 +1,6 @@
 package midka.singleton;
 
 import midka.motorbikes.Motorbike;
-import midka.motorbikes.Movable;
 
 public class Pair {
     public Motorbike motorbike;

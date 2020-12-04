@@ -2,8 +2,6 @@ package midka.facades;
 
 import midka.builders.MotorbikeBuilder;
 import midka.builders.director.Director;
-import midka.files.Credit;
-import midka.files.Order;
 import midka.handlers.BaseAuthHandler;
 import midka.handlers.RoleCheckHandler;
 import midka.motorbikes.Motorbike;
@@ -22,6 +20,9 @@ import midka.users.Admin;
 import midka.users.Customer;
 import midka.visitor.JSONExportVisitor;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -33,7 +34,7 @@ public class MotoBikeShowroomApp {
     private AuthService authService;
     private NotifierService notifierService;
     private JSONExportVisitor jsonExportVisitor = new JSONExportVisitor();
-    private PayStrategy payStrategy;
+    private PayStrategy payStrategy ;
     private EventManager manager;
     private ArrayList<String> nameBikes;
     private Scanner sc;
@@ -274,7 +275,27 @@ public class MotoBikeShowroomApp {
     }
 
     private void callJsonExport() {
-        System.out.println(jsonExportVisitor.doExportDbOrderAndDbCreditToJsonFormat());
+        System.out.println("\nExport to JSON Format\n");
+        String text = jsonExportVisitor.doExportDbOrderAndDbCreditToJsonFormat();
+
+        try {
+            File jsonFile = new File("db.json");
+
+            if (!jsonFile.createNewFile()) {
+                jsonFile.delete();
+                jsonFile.createNewFile();
+            }
+
+            FileWriter writer = new FileWriter(jsonFile);
+            writer.write(text);
+            writer.close();
+
+            System.out.println("\n" + text);
+            System.out.println("File created: " + jsonFile.getName());
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
     public void run() {
