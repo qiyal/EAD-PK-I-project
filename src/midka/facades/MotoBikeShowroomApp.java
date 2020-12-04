@@ -2,6 +2,8 @@ package midka.facades;
 
 import midka.builders.MotorbikeBuilder;
 import midka.builders.director.Director;
+import midka.files.Credit;
+import midka.files.Order;
 import midka.handlers.BaseAuthHandler;
 import midka.handlers.RoleCheckHandler;
 import midka.motorbikes.Motorbike;
@@ -18,6 +20,7 @@ import midka.singleton.DBUser;
 import midka.strategies.*;
 import midka.users.Admin;
 import midka.users.Customer;
+import midka.visitor.JSONExportVisitor;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,6 +32,7 @@ public class MotoBikeShowroomApp {
     private DBCredit dbCredit;
     private AuthService authService;
     private NotifierService notifierService;
+    private JSONExportVisitor jsonExportVisitor = new JSONExportVisitor();
     private PayStrategy payStrategy;
     private EventManager manager;
     private ArrayList<String> nameBikes;
@@ -269,6 +273,10 @@ public class MotoBikeShowroomApp {
         }
     }
 
+    private void callJsonExport() {
+        System.out.println(jsonExportVisitor.doExportDbOrderAndDbCreditToJsonFormat());
+    }
+
     public void run() {
         sc = new Scanner(System.in);
 
@@ -313,6 +321,7 @@ public class MotoBikeShowroomApp {
                 System.out.println("enter 3 --- Show credits");
                 System.out.println("enter 4 --- Show garage");
                 System.out.println("enter 5 --- Change motorbike price");
+                System.out.println("enter 6 --- Export data to JSON format");
                 System.out.println("enter -1 --- Sign Out");
                 System.out.println("enter 0 --- EXIT");
                 System.out.print("enter: ");
@@ -330,6 +339,8 @@ public class MotoBikeShowroomApp {
                     dbBike.showAllMotorBikes();
                 } else if (op == 5) {
                     changeMotorbikePrice();
+                } else if (op == 6) {
+                    callJsonExport();
                 } else if (op == 0) {
                     break;
                 } else {

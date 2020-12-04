@@ -1,5 +1,7 @@
 package midka.users;
 
+import midka.visitor.Visitor;
+
 public abstract class User {
     private String firstName;
     private String lastName;

@@ -4,6 +4,8 @@ import midka.users.Admin;
 import midka.users.Customer;
 import midka.strategies.CreditCard;
 import midka.users.User;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,5 +79,25 @@ public class DBUser {
             if(user instanceof Admin)
                 System.out.println( ( (Admin) user).getLogin());
         }
+    }
+
+    public ArrayList<Admin> getAllAdmins() {
+        ArrayList<Admin> admins = new ArrayList<>();
+        for (String key : users.keySet()) {
+            if(users.get(key) instanceof Admin) {
+                admins.add((Admin) users.get(key));
+            }
+        }
+        return admins;
+    }
+
+    public ArrayList<Customer> getAllCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
+        for (String key : users.keySet()) {
+            if(users.get(key) instanceof Customer) {
+                customers.add((Customer) users.get(key));
+            }
+        }
+        return customers;
     }
 }

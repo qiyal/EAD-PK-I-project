@@ -1,8 +1,10 @@
 package midka.files;
 
+import midka.visitor.Visitor;
+
 import java.util.Date;
 
-public class Credit {
+public class Credit implements IFile {
     private int amount;
     private double coefficient;
     private Order order;
@@ -63,5 +65,10 @@ public class Credit {
                 "\nStart time: " + startTime +
                 "\nEnd Time: " + endTime +
                 "\nYears: " + years;
+    }
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitCredit(this);
     }
 }

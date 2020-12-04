@@ -19,6 +19,10 @@ public class DBCredit implements ICustomIterableCollection {
         return instance;
     }
 
+    public ArrayList<Credit> getCredits() {
+        return credits;
+    }
+
     public void addCredit(Credit credit) {
         credits.add(credit);
     }

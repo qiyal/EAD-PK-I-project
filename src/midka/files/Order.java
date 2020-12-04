@@ -1,6 +1,8 @@
 package midka.files;
 
-public class Order {
+import midka.visitor.Visitor;
+
+public class Order implements IFile {
     private String customerEmail;
     private String motorbikeId;
     private int cost = 0;
@@ -50,5 +52,10 @@ public class Order {
         return "\nCost: " + cost +
                 "\nCustomer email: '" + customerEmail +
                 "\nMotorbike name: " + motorbikeId;
+    }
+
+    @Override
+    public String accept(Visitor visitor) {
+        return visitor.visitOrder(this);
     }
 }

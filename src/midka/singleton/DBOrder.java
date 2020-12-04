@@ -19,6 +19,10 @@ public class DBOrder implements ICustomIterableCollection {
         return instance;
     }
 
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
+
     public void addOrder(Order order) {
         orders.add(order);
     }

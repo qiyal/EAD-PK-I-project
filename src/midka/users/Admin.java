@@ -1,6 +1,7 @@
 package midka.users;
 
 import midka.users.User;
+import midka.visitor.Visitor;
 
 public class Admin extends User {
     private String login;
