@@ -1,6 +1,6 @@
 package midka.singleton;
 
-import midka.Credit;
+import midka.files.Credit;
 import midka.iterators.DBCreditIterator;
 import midka.iterators.ICustomIterableCollection;
 import midka.iterators.ICustomIterator;

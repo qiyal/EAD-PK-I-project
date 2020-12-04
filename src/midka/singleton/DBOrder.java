@@ -1,14 +1,11 @@
 package midka.singleton;
 
-import midka.Order;
+import midka.files.Order;
 import midka.iterators.DBOrderIterator;
 import midka.iterators.ICustomIterableCollection;
 import midka.iterators.ICustomIterator;
-import midka.motorbikes.Motorbike;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DBOrder implements ICustomIterableCollection {
     private static DBOrder instance;

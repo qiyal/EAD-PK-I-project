@@ -1,4 +1,4 @@
-package midka;
+package midka.files;
 
 import java.util.Date;
 

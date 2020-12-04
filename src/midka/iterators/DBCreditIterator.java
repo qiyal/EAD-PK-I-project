@@ -1,6 +1,6 @@
 package midka.iterators;
 
-import midka.Credit;
+import midka.files.Credit;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
 package midka.strategies;
 
 import midka.users.Customer;
-import midka.Order;
+import midka.files.Order;
 import midka.singleton.DBBike;
 import midka.singleton.DBOrder;
 import midka.singleton.DBUser;

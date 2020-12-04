@@ -1,9 +1,9 @@
-package midka;
+package midka.files;
 
 public class Order {
-    private int cost = 0;
     private String customerEmail;
     private String motorbikeId;
+    private int cost = 0;
 
     public Order () {}
 

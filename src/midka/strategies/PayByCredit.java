@@ -1,8 +1,8 @@
 package midka.strategies;
 
-import midka.Credit;
+import midka.files.Credit;
 import midka.users.Customer;
-import midka.Order;
+import midka.files.Order;
 import midka.motorbikes.Motorbike;
 import midka.singleton.DBBike;
 import midka.singleton.DBCredit;

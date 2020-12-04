@@ -1,6 +1,6 @@
 package midka.iterators;
 
-import midka.Order;
+import midka.files.Order;
 
 import java.util.ArrayList;
 
